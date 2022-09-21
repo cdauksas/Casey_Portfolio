@@ -101,28 +101,11 @@ Add OwnerSplitState Nvarchar(255);
 Update NashvilleHousing
 SET OwnerSplitState = PARSENAME(REPLACE(OwnerAddress, ',', '.') , 1)
 
-
-
-Select *
-From PortfolioProject.dbo.NashvilleHousing
-
-
 ```
 
---------------------------------------------------------------------------------------------------------------------------
+- Change Y and N to Yes and No in "Sold as Vacant" field
 
-
--- Change Y and N to Yes and No in "Sold as Vacant" field
-
-
-Select Distinct(SoldAsVacant), Count(SoldAsVacant)
-From PortfolioProject.dbo.NashvilleHousing
-Group by SoldAsVacant
-order by 2
-
-
-
-
+```SQL
 Select SoldAsVacant
 , CASE When SoldAsVacant = 'Y' THEN 'Yes'
 	   When SoldAsVacant = 'N' THEN 'No'
@@ -136,16 +119,13 @@ SET SoldAsVacant = CASE When SoldAsVacant = 'Y' THEN 'Yes'
 	   When SoldAsVacant = 'N' THEN 'No'
 	   ELSE SoldAsVacant
 	   END
+```
 
 
+- Use a CTE to remove Duplicates
 
 
-
-
------------------------------------------------------------------------------------------------------------------------------------------------------------
-
--- Remove Duplicates
-
+```SQL
 WITH RowNumCTE AS(
 Select *,
 	ROW_NUMBER() OVER (
@@ -165,46 +145,21 @@ Select *
 From RowNumCTE
 Where row_num > 1
 Order by PropertyAddress
+```
 
 
+Delete Unused COlumns
 
-Select *
-From PortfolioProject.dbo.NashvilleHousing
-
-
-
-
----------------------------------------------------------------------------------------------------------
-
--- Delete Unused Columns
-
-
-
+```SQL
 Select *
 From PortfolioProject.dbo.NashvilleHousing
 
 
 ALTER TABLE PortfolioProject.dbo.NashvilleHousing
 DROP COLUMN OwnerAddress, TaxDistrict, PropertyAddress, SaleDate
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
------------------------------------------------------------------------------------------------
------------------------------------------------------------------------------------------------
-
---- Importing Data using OPENROWSET and BULK INSERT	
+```
+- Importing Data using OPENROWSET and BULK INSERT
+```SQL	
 
 --  More advanced and looks cooler, but have to configure server appropriately to do correctly
 --  Wanted to provide this in case you wanted to try it
