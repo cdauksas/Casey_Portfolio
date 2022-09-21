@@ -1,5 +1,5 @@
-# Nashville Housing Data Cleaning Project - SQL Server #
-#### Followed along with the Youtuber: Alex the Analyst and cleaned housing data with Microsoft SQL Server ####
+# Housing Data Cleaning Project - SQL Server #
+#### Cleaned housing data with Microsoft SQL Server ####
 
 
 - Removing the 00:00:00.000 from the date.
