@@ -34,13 +34,13 @@ Where a.PropertyAddress is null
 
 ```
 
-- Breaking out Address into Individual Columns (Address, City, State)
+- Breaking out PropertyAddress into Individual Columns (Address and City)
 
 Remember syntax: SUBSTRING(string, start, length)
 - Example:
-  -Value in Property Address Before: 1808 FOX CHASE DR, GOODLETTSVILLE
-  -Creates a new column PropertySplitAddress: 1808 FOX CHASE DR
-  -Creates a new column PropertySplitCity: GOODLETTSVILLE
+  - Value in Property Address Before: 1808 FOX CHASE DR, GOODLETTSVILLE
+  - Creates a new column PropertySplitAddress: 1808 FOX CHASE DR
+  - Creates a new column PropertySplitCity: GOODLETTSVILLE
 
 ```SQL
 --Going to the comma and then going one behind the comma to get rid of the comma in the first column, going one past the column (+1) in the second column 'City'
@@ -63,17 +63,11 @@ Add PropertySplitCity Nvarchar(255);
 
 Update NashvilleHousing
 SET PropertySplitCity = SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) + 1 , LEN(PropertyAddress))
+```
 
-
-
-
-Select *
-From PortfolioProject.dbo.NashvilleHousing
-
-
-
-
-
+- Splitting OwnerAddress into Address, City, and State
+- This time using Parsename instead of Substring
+```SQL
 Select OwnerAddress
 From PortfolioProject.dbo.NashvilleHousing
 
@@ -113,7 +107,7 @@ Select *
 From PortfolioProject.dbo.NashvilleHousing
 
 
-
+```
 
 --------------------------------------------------------------------------------------------------------------------------
 
