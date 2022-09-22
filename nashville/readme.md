@@ -1,4 +1,4 @@
-# Housing Data Cleaning Project - SQL Server :house_with_garden: #
+# Housing Data Cleaning Project :house_with_garden: #
 #### Nashville Housing Data Cleaning with Microsoft SQL Server ####
 
 
