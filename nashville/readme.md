@@ -36,7 +36,6 @@ Where a.PropertyAddress is null
 
 - Breaking out PropertyAddress into Individual Columns (Address and City)
 
-Remember syntax: SUBSTRING(string, start, length)
 - Example:
   - Value in Property Address Before: 1808 FOX CHASE DR, GOODLETTSVILLE
   - Creates a new column PropertySplitAddress: 1808 FOX CHASE DR
