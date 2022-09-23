@@ -13,6 +13,9 @@ Add SaleDateConverted Date;
 Update NashvilleHousing
 SET SaleDateConverted = CONVERT(Date,SaleDate)
 ```
+
+![](https://github.com/cdauksas/PortfolioProjects/blob/main/images/DateConverted.png)
+
 - Populating null values in the PropertyAddress column by doing a self join with the Pacel ID.
 
 ```SQL
@@ -35,20 +38,18 @@ Where a.PropertyAddress is null
 ```
 
 - Breaking out PropertyAddress into Individual Columns (Address and City)
+- PropertyAddress column originally:
 
-- Example:
-  - Value in Property Address Before: 1808 FOX CHASE DR, GOODLETTSVILLE
-  - Creates a new column PropertySplitAddress: 1808 FOX CHASE DR
-  - Creates a new column PropertySplitCity: GOODLETTSVILLE
+![](https://github.com/cdauksas/PortfolioProjects/blob/main/images/BeforePropertyAddress.png)
+
 
 ```SQL
 --Going to the comma and then going one behind the comma to get rid of the comma in the first column, going one past the column (+1) in the second column 'City'
 SELECT
-SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1 ) as Address
-, SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) + 1 , LEN(PropertyAddress)) as City  --
+SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1 )
+, SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) + 1 , LEN(PropertyAddress))   
 
 From PortfolioProject.dbo.NashvilleHousing
-
 
 ALTER TABLE NashvilleHousing
 Add PropertySplitAddress Nvarchar(255);
@@ -56,16 +57,21 @@ Add PropertySplitAddress Nvarchar(255);
 Update NashvilleHousing
 SET PropertySplitAddress = SUBSTRING(PropertyAddress, 1, CHARINDEX(',', PropertyAddress) -1 )
 
-
 ALTER TABLE NashvilleHousing
 Add PropertySplitCity Nvarchar(255);
 
 Update NashvilleHousing
 SET PropertySplitCity = SUBSTRING(PropertyAddress, CHARINDEX(',', PropertyAddress) + 1 , LEN(PropertyAddress))
 ```
+New Split Property Address columns:
+
+![](https://github.com/cdauksas/PortfolioProjects/blob/main/images/AfterPropertyAddress.png)
 
 - Splitting OwnerAddress into Address, City, and State
-- This time using Parsename instead of Substring
+- Owner Address originally:
+
+![](https://github.com/cdauksas/PortfolioProjects/blob/main/images/BeforeOwnerAddress.png)
+
 ```SQL
 Select OwnerAddress
 From PortfolioProject.dbo.NashvilleHousing
@@ -76,8 +82,6 @@ PARSENAME(REPLACE(OwnerAddress, ',', '.') , 3)
 ,PARSENAME(REPLACE(OwnerAddress, ',', '.') , 2)
 ,PARSENAME(REPLACE(OwnerAddress, ',', '.') , 1)
 From PortfolioProject.dbo.NashvilleHousing
-
-
 
 ALTER TABLE NashvilleHousing
 Add OwnerSplitAddress Nvarchar(255);
@@ -92,8 +96,6 @@ Add OwnerSplitCity Nvarchar(255);
 Update NashvilleHousing
 SET OwnerSplitCity = PARSENAME(REPLACE(OwnerAddress, ',', '.') , 2)
 
-
-
 ALTER TABLE NashvilleHousing
 Add OwnerSplitState Nvarchar(255);
 
@@ -101,6 +103,9 @@ Update NashvilleHousing
 SET OwnerSplitState = PARSENAME(REPLACE(OwnerAddress, ',', '.') , 1)
 
 ```
+- New split owner address columns:
+
+![](https://github.com/cdauksas/PortfolioProjects/blob/main/images/AfterOwnerAddress.png)
 
 - Change Y and N to Yes and No in "Sold as Vacant" field
 
